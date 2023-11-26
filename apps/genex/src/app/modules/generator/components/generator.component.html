@@ -1,0 +1,81 @@
+<div class="py-8 flex justify-center">
+  <div class="w-[800px] flex flex-col items-stretch gap-10">
+    <div class="flex flex-col gap-1">
+      <div class="flex flex-row justify-between items-end">
+        <div class="flex flex-col gap-2">
+          <!-- Bias input -->
+          <genex-input
+            label="character"
+            placeholder="Character"
+            [form]="form"
+            controlName="bias"
+            dataType="text"
+            autocomplete="off"
+            [maxlength]="1"
+          />
+        </div>
+        <img src="assets/clockicon.svg" alt="Clock Icon" />
+        <!-- Generate/Stop button -->
+        <genex-button
+          [label]="
+            isGenerating && socketIsConnected
+              ? 'STOP GENERATING 2D GRID'
+              : 'GENERATE 2D GRID'
+          "
+          (clicked)="onGenButtonClicked()"
+          [isDisabled]="!socketIsConnected"
+        />
+      </div>
+      <!-- Error message when bias is repaeted within 4 seconds -->
+      <div *ngIf="biasRepeated" class="flex flex-row justify-start items-start">
+        <div
+          class="pointer-events-none select-none uppercase text-[8px] text-red-800 font-semibold"
+        >
+          Used in the last 4 seconds
+        </div>
+      </div>
+    </div>
+    <!-- 2D Data Grid received from server -->
+    <div class="w-full flex flex-col justify-start items-center">
+      <div *ngFor="let row of pageData?.grid; let rowIndex = index">
+        <div class="flex flex-row">
+          <div
+            *ngFor="let cell of row; let cellIndex = index"
+            class="w-20 h-10"
+          >
+            <div
+              class="w-full h-full flex flex-row justify-center items-center border-b border-r border-blackish"
+              [ngClass]="{
+                'border-t': rowIndex === 0,
+                'border-l': cellIndex === 0
+              }"
+            >
+              <span class="text-xs">{{ cell }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col items-center gap-3">
+      <!-- Socket is connected -->
+      <div *ngIf="socketIsConnected" class="flex flex-row gap-1.5">
+        <img src="assets/reddishdot.svg" alt="Red Dot" />
+        <div class="uppercase font-semibold text-blackish-600">live</div>
+      </div>
+      <!-- Socket is NOT connected -->
+      <div *ngIf="!socketIsConnected" class="flex flex-row gap-1.5">
+        <img src="assets/greydot.svg" alt="Grey Dot" />
+        <div class="uppercase font-semibold text-blackish-600">offline</div>
+      </div>
+      <!-- Code received from server -->
+      <div
+        class="w-1/4 h-10 flex flex-row items-center justify-center border rounded border-blackish uppercase"
+      >
+        <span>your code: {{ pageData?.code ? pageData?.code : '--' }}</span>
+      </div>
+    </div>
+    <div>
+      <a routerLink="/payments" class="text-blackish">Go to Payments Page</a>
+    </div>
+  </div>
+</div>

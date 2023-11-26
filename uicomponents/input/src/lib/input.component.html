@@ -1,0 +1,26 @@
+<form
+  class="flex flex-col justify-start items-start text-blueish gap-2"
+  [formGroup]="form!"
+>
+  <div
+    *ngIf="label"
+    class="pointer-events-none select-none uppercase text-[10px] text-blueish font-semibold"
+  >
+    {{ label }}
+  </div>
+  <div class="w-28 h-10 flex flex-row px-3 border rounded-md">
+    <input
+      [formControlName]="controlName"
+      [placeholder]="placeholder"
+      [value]="form?.get(controlName)?.value?.label || ''"
+      [type]="dataType"
+      class="w-20 outline outline-0 focus:outline-0 text-xs"
+      [id]="dataType + '-' + controlName"
+      [name]="dataType"
+      [autocomplete]="autocomplete"
+      [attr.aria-label]="label"
+      [disabled]="isDisabled"
+      [maxlength]="maxlength"
+    />
+  </div>
+</form>

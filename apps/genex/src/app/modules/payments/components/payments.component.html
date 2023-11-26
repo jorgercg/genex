@@ -1,0 +1,113 @@
+<div class="py-8 flex justify-center">
+  <div class="w-[800px] flex flex-col items-stretch gap-10">
+    <div class="flex flex-col items-center gap-3">
+      <!-- Socket is connected -->
+      <div *ngIf="socketIsConnected" class="flex flex-row gap-1.5">
+        <img src="assets/reddishdot.svg" alt="Red Dot" />
+        <div class="uppercase font-semibold text-blackish-600">live</div>
+      </div>
+      <!-- Socket is NOT connected -->
+      <div *ngIf="!socketIsConnected" class="flex flex-row gap-1.5">
+        <img src="assets/greydot.svg" alt="Grey Dot" />
+        <div class="uppercase font-semibold text-blackish-600">offline</div>
+      </div>
+      <!-- Code received from server -->
+      <div
+        class="w-1/4 h-10 flex flex-row items-center justify-center border rounded border-blackish uppercase"
+      >
+        <span>your code: {{ gridData?.code ? gridData?.code : '--' }}</span>
+      </div>
+    </div>
+    <div class="flex flex-row justify-start items-end gap-5">
+      <!-- Payment Name Input -->
+      <genex-input
+        label="Payment"
+        placeholder="Payment"
+        [form]="form"
+        controlName="paymentName"
+        dataType="text"
+        autocomplete="off"
+      />
+      <!-- Payment Amount Input -->
+      <genex-input
+        label="Amount"
+        placeholder="Amount"
+        [form]="form"
+        controlName="paymentAmount"
+        dataType="text"
+        autocomplete="off"
+      />
+      <!-- Add Payment Button -->
+      <genex-button
+        [label]="'+ ADD'"
+        (clicked)="onAddPaymentClicked()"
+        [isDisabled]="!socketIsConnected || !form.valid || !gridData?.code"
+      />
+    </div>
+    <div *ngIf="pageData && pageData.payments?.length">
+      <div
+        class="w-full flex flex-col justify-start items-stretch text-blueish gap-2"
+      >
+        <div
+          class="pointer-events-none select-none uppercase text-[10px] text-blueish font-semibold"
+        >
+          Payment List
+        </div>
+        <div>
+          <div
+            class="flex flex-row select-none uppercase text-[10px] text-blueish font-semibold"
+          >
+            <div
+              class="flex flex-row justify-start items-center pl-4 grow h-10 border-t border-l border-b border-r border-blackish"
+            >
+              Name
+            </div>
+            <div
+              class="flex flex-row justify-center items-center w-20 h-10 border-t border-b border-r border-blackish"
+            >
+              Amount
+            </div>
+            <div
+              class="flex flex-row justify-center items-center w-20 h-10 border-t border-b border-r border-blackish"
+            >
+              Code
+            </div>
+            <div
+              class="flex flex-row justify-center items-center w-20 h-10 border-t border-b border-r border-blackish"
+            >
+              Grid
+            </div>
+          </div>
+          <div *ngFor="let payment of pageData.payments">
+            <div class="flex flex-row">
+              <div
+                class="flex flex-row justify-start items-center pl-4 grow h-10 border-l border-b border-r border-blackish text-blackish text-[10px]"
+              >
+                {{ payment.paymentName }}
+              </div>
+              <div
+                class="flex flex-row justify-center items-center w-20 h-10 border-b border-r border-blackish text-blackish text-[10px]"
+              >
+                {{ payment.paymentAmount }}
+              </div>
+              <div
+                class="flex flex-row justify-center items-center w-20 h-10 border-b border-r border-blackish text-blackish text-[10px]"
+              >
+                {{ payment.gridData.code }}
+              </div>
+              <div
+                class="flex flex-row justify-center items-center w-20 h-10 border-b border-r border-blackish text-blackish text-[10px]"
+              >
+                {{ payment.gridData.grid.length }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!pageData || !pageData.payments?.length">No Payments Added</div>
+    <div>
+      <a routerLink="/generator" class="text-blackish">Go to Generator Page</a>
+    </div>
+  </div>
+</div>
