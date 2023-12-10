@@ -1,5 +1,9 @@
 # Genex
 
+A Nx Monorepo with an Angular App in the frontend and a NestJS app in the backend.
+
+Using ngrx, TailwindCSS, socket-io in a fun exercise!
+
 ## Start the app
 
 To start the development server run:
