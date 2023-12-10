@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { environment } from '../envs/environment.dev';
 
 @Component({
   selector: 'genex-root',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'genex';
+  title = environment.appTitle;
 }

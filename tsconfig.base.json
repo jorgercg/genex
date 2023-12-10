@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@genex/button": ["uicomponents/button/src/index.ts"],
+      "@genex/enums": ["libs/enums/src/index.ts"],
+      "@genex/input": ["uicomponents/input/src/index.ts"],
+      "@genex/interfaces": ["libs/interfaces/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
